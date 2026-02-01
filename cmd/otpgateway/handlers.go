@@ -273,7 +273,7 @@ func handleCheckOTPStatus(w http.ResponseWriter, r *http.Request) {
 	out, err := app.store.Check(namespace, id, store.CounterNil)
 	if err != nil {
 		if err == store.ErrNotExist {
-			sendErrorResponse(w, err.Error(), http.StatusBadRequest, nil)
+			sendErrorResponse(w, "OTP has expired.", http.StatusGone, nil)
 			return
 		}
 
@@ -318,7 +318,7 @@ func handleVerifyOTP(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		code := http.StatusBadRequest
 		if err == store.ErrNotExist {
-			sendErrorResponse(w, err.Error(), code, nil)
+			sendErrorResponse(w, "OTP has expired.", http.StatusGone, nil)
 			return
 		}
 
