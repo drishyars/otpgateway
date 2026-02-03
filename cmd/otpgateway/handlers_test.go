@@ -240,7 +240,7 @@ func TestCheckOTP(t *testing.T) {
 	r = testRequest(t, http.MethodPost, "/api/otp/abc123", cp, &data)
 	assert.NotEqual(t, http.StatusOK, r.StatusCode, "non-existent OTP didn't return 200")
 
-	// Check non-existent OTP, should return 400.
+	// Check non-existent OTP, should return 410.
 	r = testRequest(t, http.MethodPost, "/api/otp/abc123", cp, &out)
 	assert.Equal(t, http.StatusGone, r.StatusCode, "non-existent OTP returns 410")
 	assert.Equal(t, "OTP has expired.", out.Message, "non-existent OTP passed")
