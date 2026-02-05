@@ -243,7 +243,7 @@ func TestCheckOTP(t *testing.T) {
 	// Check non-existent OTP, should return 410.
 	r = testRequest(t, http.MethodPost, "/api/otp/abc123", cp, &out)
 	assert.Equal(t, http.StatusGone, r.StatusCode, "non-existent OTP returns 410")
-	assert.Equal(t, "OTP has expired.", out.Message, "non-existent OTP passed")
+	assert.Equal(t, "OTP has expired or doesn't exist", out.Message, "non-existent OTP passed")
 }
 
 func TestCheckOTPAttempts(t *testing.T) {
@@ -325,7 +325,7 @@ func TestDeleteOnOTPCheck(t *testing.T) {
 	// Reattempt status check
 	r = testRequest(t, http.MethodDelete, "/api/otp/"+dummyOTPID+"/status", nil, &out)
 	assert.Equal(t, http.StatusGone, r.StatusCode, "otp not found returns 410")
-	assert.Equal(t, "OTP has expired.", out.Message, "deleted OTP passed")
+	assert.Equal(t, "OTP has expired or doesn't exist", out.Message, "deleted OTP passed")
 }
 
 func testRequest(t *testing.T, method, path string, p url.Values, out interface{}) *http.Response {
