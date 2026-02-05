@@ -273,7 +273,7 @@ func handleCheckOTPStatus(w http.ResponseWriter, r *http.Request) {
 	out, err := app.store.Check(namespace, id, store.CounterNil)
 	if err != nil {
 		if err == store.ErrNotExist {
-			sendErrorResponse(w, err.Error(), http.StatusGone, nil)
+			sendErrorResponse(w, err.Error(), http.StatusBadRequest, nil)
 			return
 		}
 
